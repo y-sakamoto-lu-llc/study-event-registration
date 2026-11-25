@@ -1,0 +1,34 @@
+<%= form_with model: event do |form| %>
+  <% if event.errors.any? %>
+    <div class="errors">
+      <ul>
+        <% event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 5 %>
+  </div>
+  <div class="field">
+    <%= form.label :starts_at %>
+    <%= form.datetime_field :starts_at %>
+  </div>
+  <div class="field">
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity, min: 1 %>
+  </div>
+  <div class="field">
+    <%= form.label :registration_deadline %>
+    <%= form.datetime_field :registration_deadline %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

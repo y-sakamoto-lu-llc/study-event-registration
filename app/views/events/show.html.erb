@@ -1,0 +1,43 @@
+<% content_for :title, @event.title %>
+
+<h1><%= @event.title %></h1>
+
+<dl class="event-details">
+  <dt>開催日時</dt>
+  <dd><%= l @event.starts_at, format: :long %></dd>
+  <dt>定員</dt>
+  <dd><%= @event.capacity %> 人</dd>
+  <dt>申込締切</dt>
+  <dd><%= @event.registration_deadline ? l(@event.registration_deadline, format: :long) : "なし" %></dd>
+  <dt>主催者</dt>
+  <dd><%= @event.organizer.name %></dd>
+</dl>
+
+<div class="description"><%= simple_format @event.description %></div>
+
+<% if authenticated? %>
+  <% if @registration&.registered? %>
+    <p>参加登録済みです。</p>
+    <%= button_to "キャンセルする", event_registration_path(@event), method: :delete %>
+  <% else %>
+    <%= button_to "参加する", event_registration_path(@event) %>
+  <% end %>
+<% else %>
+  <p><%= link_to "ログイン", new_session_path %>すると参加登録できます。</p>
+<% end %>
+
+<h2>参加者（<%= @event.participants.count %> 人）</h2>
+<ul>
+  <% @event.participants.each do |user| %>
+    <li><%= user.name %></li>
+  <% end %>
+</ul>
+
+<% if authenticated? && @event.organized_by?(Current.user) %>
+  <p class="organizer-actions">
+    <%= link_to "編集する", edit_event_path(@event) %>
+    <%= button_to "削除する", @event, method: :delete, data: { turbo_confirm: "削除しますか？" } %>
+  </p>
+<% end %>
+
+<p><%= link_to "一覧に戻る", events_path %></p>
