@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title><%= content_for(:title) || "勉強会の参加登録" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Study Event Registration">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <%= link_to "勉強会の参加登録", root_path, class: "site-title" %>
+      <nav>
+        <% if authenticated? %>
+          <span><%= Current.user.name %> さん</span>
+          <%= link_to "マイページ", my_page_path %>
+          <%= link_to "イベントを作る", new_event_path %>
+          <%= button_to "ログアウト", session_path, method: :delete, class: "link-button" %>
+        <% else %>
+          <%= link_to "ログイン", new_session_path %>
+          <%= link_to "アカウント作成", new_user_path %>
+        <% end %>
+      </nav>
+    </header>
+
+    <main>
+      <% if notice %><p class="flash notice"><%= notice %></p><% end %>
+      <% if alert %><p class="flash alert"><%= alert %></p><% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

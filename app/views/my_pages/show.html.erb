@@ -1,0 +1,17 @@
+<% content_for :title, "マイページ" %>
+
+<h1>マイページ</h1>
+
+<h2>参加登録しているイベント</h2>
+<% if @registrations.any? %>
+  <ul>
+    <% @registrations.each do |registration| %>
+      <li>
+        <%= l registration.event.starts_at, format: :short %>
+        <%= link_to registration.event.title, registration.event %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>参加登録しているイベントはありません。</p>
+<% end %>
