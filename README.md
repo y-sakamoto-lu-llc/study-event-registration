@@ -6,9 +6,28 @@
 
 ## 動かし方
 
+Dev Container で動かします。Ruby や Node.js を手元に入れる必要はありません。
+
+### 用意するもの
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)（または互換の Docker 環境）
+- [VS Code](https://code.visualstudio.com/) と拡張機能 [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+### 起動する
+
+1. このリポジトリをクローンし、VS Code で開きます。
+2. 右下の通知、またはコマンドパレットの「Dev Containers: Reopen in Container」を選びます。
+3. 初回はイメージの作成と `bin/setup --skip-server`（gem のインストールと DB の準備）が自動で走ります。
+4. VS Code のターミナル（コンテナの中）で次を実行します。
+
 ```sh
-bin/setup          # 依存関係のインストール、DB の作成、シードの投入、サーバー起動
+bin/dev            # サーバー起動
+claude             # Claude Code を起動（初回はログインが必要）
 ```
+
+コンテナには Ruby・SQLite・Node.js・Claude Code が入っています。Claude Code のログイン情報はボリュームに保存されるので、コンテナを作り直しても残ります。
+
+### サーバーが立ち上がったら
 
 - http://localhost:3000 を開きます。
 - シードのユーザーはすべてパスワード `password` です（例: `organizer@example.com`）。

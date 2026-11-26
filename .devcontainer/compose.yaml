@@ -1,0 +1,14 @@
+name: "study_event_registration"
+
+services:
+  rails-app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      # クローンしたフォルダ名に関係なく、同じ場所にマウントする
+      - ..:/workspaces/study-event-registration:cached
+
+    # コンテナを起動したままにする
+    command: sleep infinity
