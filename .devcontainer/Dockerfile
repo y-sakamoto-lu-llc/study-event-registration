@@ -20,6 +20,11 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
 # Claude Code の CLI
 RUN npm install -g @anthropic-ai/claude-code
 
+# Gemfile.lock の BUNDLED WITH と同じ Bundler を入れる（Ruby に同梱の版との切り替えを起こさない）
+COPY Gemfile.lock /tmp/Gemfile.lock
+RUN gem install bundler -v "$(awk '/^BUNDLED WITH/ { getline; print $1 }' /tmp/Gemfile.lock)" \
+  && rm /tmp/Gemfile.lock
+
 # 作業用のユーザー（root で作業しない）
 ARG USERNAME=vscode
 RUN useradd --create-home --shell /bin/bash ${USERNAME} \
