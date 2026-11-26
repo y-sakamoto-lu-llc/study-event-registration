@@ -15,7 +15,14 @@ Dev Container で動かします。Ruby や Node.js を手元に入れる必要�
 
 ### 起動する
 
-1. このリポジトリをクローンし、VS Code で開きます。
+1. このリポジトリを自分のアカウントにフォークし、フォークしたリポジトリをクローンします。連載の後半で、自分のリポジトリに push したり PR を作ったりするためです。
+   ```sh
+   git clone https://github.com/<自分のアカウント>/study-event-registration.git
+   cd study-event-registration
+   git remote add upstream https://github.com/y-sakamoto-lu-llc/study-event-registration.git
+   git fetch upstream --tags   # 章の開始地点のタグを取り込む
+   ```
+   クローンしたフォルダを VS Code で開きます（Cursor でも同じ手順で進められます）。
 2. 右下の通知、またはコマンドパレットの「Dev Containers: Reopen in Container」を選びます。
 3. 初回はイメージの作成と `bin/setup --skip-server`（gem のインストールと DB の準備）が自動で走ります。
 4. VS Code のターミナル（コンテナの中）で次を実行します。
@@ -53,4 +60,4 @@ bin/ci               # 上の3つを含むチェック一式
 
 ## 各章の開始地点
 
-連載の各章は `step-02-start` のようなタグから始められます（章の公開に合わせて追加します）。
+連載の各章は `step-04-start` のようなタグから始められます（章の公開に合わせて追加します）。新しく追加されたタグは `git fetch upstream --tags` で取り込めます。
