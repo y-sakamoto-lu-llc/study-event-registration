@@ -11,7 +11,9 @@ Dev Container で動かします。Ruby や Node.js を手元に入れる必要�
 ### 用意するもの
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)（または互換の Docker 環境）
-- [VS Code](https://code.visualstudio.com/) と拡張機能 [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- [Cursor](https://cursor.com/) と拡張機能「Dev Containers」（Cursor の拡張機能の画面で検索して入れます）
+
+VS Code でも、拡張機能 [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) を入れれば同じ手順で動かせます。
 
 ### 起動する
 
@@ -22,10 +24,10 @@ Dev Container で動かします。Ruby や Node.js を手元に入れる必要�
    git remote add upstream https://github.com/y-sakamoto-lu-llc/study-event-registration.git
    git fetch upstream --tags   # 章の開始地点のタグを取り込む
    ```
-   クローンしたフォルダを VS Code で開きます（Cursor でも同じ手順で進められます）。
+   クローンしたフォルダを Cursor で開きます。
 2. 右下の通知、またはコマンドパレットの「Dev Containers: Reopen in Container」を選びます。
 3. 初回はイメージの作成と `bin/setup --skip-server`（gem のインストールと DB の準備）が自動で走ります。
-4. VS Code のターミナル（コンテナの中）で次を実行します。
+4. Cursor のターミナル（コンテナの中）で次を実行します。
 
 ```sh
 bin/dev            # サーバー起動
