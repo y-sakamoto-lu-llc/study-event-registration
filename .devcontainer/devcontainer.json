@@ -1,0 +1,24 @@
+// 仕様: https://containers.dev/implementors/json_reference/
+{
+  "name": "study_event_registration",
+  "dockerComposeFile": "compose.yaml",
+  "service": "rails-app",
+  "workspaceFolder": "/workspaces/study-event-registration",
+  "remoteUser": "vscode",
+
+  // Claude Code のログイン情報が、コンテナを作り直しても消えないようにボリュームに置く
+  "mounts": [
+    "source=study-event-registration-claude,target=/home/vscode/.claude,type=volume"
+  ],
+
+  "forwardPorts": [3000],
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code", "Shopify.ruby-lsp"]
+    }
+  },
+
+  // gem のインストールと DB の準備
+  "postCreateCommand": "bin/setup --skip-server"
+}
