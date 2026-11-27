@@ -11,6 +11,11 @@
     "source=study-event-registration-claude,target=/home/vscode/.claude,type=volume"
   ],
 
+  // GitHub CLI（STEP 6 で PR を作るのに使う）
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
   "forwardPorts": [3000],
 
   "customizations": {
