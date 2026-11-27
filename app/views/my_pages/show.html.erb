@@ -9,6 +9,7 @@
       <li>
         <%= l registration.event.starts_at, format: :short %>
         <%= link_to registration.event.title, registration.event %>
+        <% if registration.cancelled? %>（キャンセル済み）<% end %>
       </li>
     <% end %>
   </ul>

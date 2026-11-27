@@ -16,4 +16,31 @@ class Event < ApplicationRecord
   def registration_for(user)
     registrations.find_by(user: user)
   end
+
+  def full?
+    registrations.registered.count >= capacity
+  end
+
+  def accepting_registrations?
+    Time.current <= (registration_deadline || starts_at)
+  end
+
+  # 参加登録する。登録できなかったときは、理由を errors[:base] に入れた未保存（または元の状態のまま）の登録を返す。
+  # キャンセル済みの登録があれば、新しい行を作らずにその行を登録済みに戻す。
+  def register(user)
+    with_lock do
+      registration = registrations.find_or_initialize_by(user: user)
+      next registration if registration.persisted? && registration.registered?
+
+      if !accepting_registrations?
+        registration.errors.add(:base, "申込は締め切りました")
+      elsif full?
+        registration.errors.add(:base, "満席です")
+      else
+        registration.registered!
+      end
+
+      registration
+    end
+  end
 end
