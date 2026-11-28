@@ -2,8 +2,13 @@ class RegistrationsController < ApplicationController
   before_action :set_event
 
   def create
-    @event.registrations.create!(user: Current.user, status: :registered)
-    redirect_to @event, notice: "参加登録しました。"
+    registration = @event.register(Current.user)
+
+    if registration.errors.any?
+      redirect_to @event, alert: registration.errors.full_messages.to_sentence
+    else
+      redirect_to @event, notice: "参加登録しました。"
+    end
   end
 
   def destroy

@@ -220,4 +220,36 @@ RSpec.describe Event, type: :model do
       expect(event.participants).to contain_exactly(user)
     end
   end
+
+  describe "#register（すでに登録済みの人がもう一度申し込んだとき）" do
+    let(:user) { create(:user) }
+
+    # AC-3
+    it "満席でもエラーにせず、登録済みの同じ登録を1件のまま返す" do
+      event = create(:event, capacity: 1)
+      existing = create(:registration, event: event, user: user)
+      expect(event.full?).to be true
+
+      registration = nil
+      expect { registration = event.register(user) }.not_to change(Registration, :count)
+      expect(registration.errors).to be_empty
+      expect(registration.id).to eq existing.id
+      expect(existing.reload).to be_registered
+    end
+
+    # AC-3
+    it "締切後でもエラーにせず、登録済みの同じ登録を1件のまま返す" do
+      deadline = Time.zone.local(2026, 12, 10, 18, 0, 0)
+      event = create(:event, starts_at: deadline + 2.days, registration_deadline: deadline)
+      existing = create(:registration, event: event, user: user)
+
+      travel_to(deadline + 1.second) do
+        registration = nil
+        expect { registration = event.register(user) }.not_to change(Registration, :count)
+        expect(registration.errors).to be_empty
+        expect(registration.id).to eq existing.id
+        expect(existing.reload).to be_registered
+      end
+    end
+  end
 end

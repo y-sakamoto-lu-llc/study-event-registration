@@ -2,16 +2,17 @@
 
 <h1>マイページ</h1>
 
-<h2>参加登録しているイベント</h2>
+<h2>参加登録したイベント（キャンセルしたものも含む）</h2>
 <% if @registrations.any? %>
   <ul>
     <% @registrations.each do |registration| %>
       <li>
         <%= l registration.event.starts_at, format: :short %>
         <%= link_to registration.event.title, registration.event %>
+        <% if registration.cancelled? %>（キャンセル済み）<% end %>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>参加登録しているイベントはありません。</p>
+  <p>参加登録したイベントはありません（キャンセルしたものも含めて）。</p>
 <% end %>
